@@ -85,6 +85,7 @@ function setBoard() {
   clearTimeout(timeCounter);
   time = 0;
   timerOn = false;
+  openCards = [];
 
   // reset moves and stars
   if(starCount === 2) {
@@ -122,6 +123,7 @@ function setBoard() {
 
 // *** Card Click Events **
 function cardClick(evt) {
+  // don't do anything if openCards array has three
   if(openCards.length <= 1) {
     evt.target.classList.add('animated', 'flipInY');
     displaySymbol(evt.target);
