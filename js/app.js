@@ -122,13 +122,15 @@ function setBoard() {
 
 // *** Card Click Events **
 function cardClick(evt) {
-  evt.target.classList.add('animated', 'flipInY');
-  displaySymbol(evt.target);
-  countMoves();
-  startTimer();
-  testCard(evt.target);
-  allMatched();
-  console.log("timer on: " + timerOn);
+  if(openCards.length <= 1) {
+    evt.target.classList.add('animated', 'flipInY');
+    displaySymbol(evt.target);
+    countMoves();
+    startTimer();
+    testCard(evt.target);
+    allMatched();
+    console.log("timer on: " + timerOn);
+  }
 }
 
 function displaySymbol(tile) {
