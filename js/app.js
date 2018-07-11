@@ -20,6 +20,7 @@ let starCount = 3;
 let time = 0;
 let timerOn = false;
 let timeCounter = "";
+let prevTarget = "";
 
 /*
  * Create a list that holds all of your cards
@@ -127,7 +128,7 @@ function cardClick(evt) {
   if(openCards.length <= 1) {
     evt.target.classList.add('animated', 'flipInY');
     displaySymbol(evt.target);
-    countMoves();
+    countMoves(evt.target);
     startTimer();
     testCard(evt.target);
     allMatched();
@@ -140,22 +141,25 @@ function displaySymbol(tile) {
   tile.classList.add('show', 'open');
 }
 
-function countMoves() {
-  clickCount = ++clickCount;
-  moveCount = (clickCount / 2);
-  if(Number.isInteger(moveCount)) {
-    moves.innerHTML = moveCount;
+function countMoves(tileName) {
+  if(prevTarget != tileName) {
+    clickCount = ++clickCount;
+    moveCount = (clickCount / 2);
+    if(Number.isInteger(moveCount)) {
+      moves.innerHTML = moveCount;
+    }
+    // if 10 moves, deduct 1 stars
+    if(moveCount === 10) {
+      starItem.removeChild(starItem.firstElementChild);
+      starCount = --starCount;
+    }
+    // if 16 moves, deduct 1 stars
+    if(moveCount === 16) {
+      document.querySelector('.stars').removeChild(document.querySelector('.stars').children[1]);
+      starCount = --starCount;
+    }
   }
-  // if 10 moves, deduct 1 stars
-  if(moveCount === 10) {
-    starItem.removeChild(starItem.firstElementChild);
-    starCount = --starCount;
-  }
-  // if 16 moves, deduct 1 stars
-  if(moveCount === 16) {
-    document.querySelector('.stars').removeChild(document.querySelector('.stars').children[1]);
-    starCount = --starCount;
-  }
+  prevTarget = tileName;
 }
 
 function testCard(tile) {
